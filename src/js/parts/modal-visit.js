@@ -1,6 +1,6 @@
 function modalVisit() {
 
-    let delayPopup = 60000;
+    let delayPopup = 3000;
 
     function show() {
         let popup = document.querySelector('.popup'),
@@ -17,11 +17,17 @@ function modalVisit() {
 
         // При клике на подложку форма становится невидимой
         popup.addEventListener('click', (event) => {
+
             let target = event.target,
                 content = document.querySelector('.popup_content');
                 
-            if (!content.contains(target)) popup.style.display = 'none';
-
+            if (!content.contains(target)) {
+                popup.style.display = 'none';
+                document.body.style.overflow = '';
+            } else {
+                popup.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
         });
     }
     
