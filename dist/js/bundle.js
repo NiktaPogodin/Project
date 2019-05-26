@@ -110,6 +110,39 @@ module.exports = calc;
 
 function clickImg() {
 
+    // document.querySelectorAll('.lupa').forEach();
+
+    // let image = document.querySelectorAll('.lupa');
+
+    // const toggleImage = () => {
+    //     image.classList.toggle('popup');
+    // }
+
+    // document.addEventListener('click', (event) => {
+    //     let target = e.target;
+    //     let itsImage = target == image || image.contains(target);
+    //     let imageIsActive = image.classList.contains('popup');
+
+    //     if (!itsImage && imageIsActive) {
+    //         toggleMenu();
+    //     }
+    // });
+
+    // image.addEventListener('click', (event) => {
+    //     if ((event.target) )
+    //     body.style.backgroundColor = 'red';
+    // });
+
+    // image.forEach((event) => {
+    //     if (!event.target.matches('.row')) {
+    //         imge.style.display = 'none';
+
+    //     }
+    // });
+
+    // image.forEach((item, i, images) => { //item каждая картинка i номер картинки images все картинки 
+
+    // });
 }
 
 module.exports = clickImg;
@@ -255,7 +288,69 @@ module.exports = tabsWindow;
 /***/ (function(module, exports) {
 
 function timer () {
+    let deadLine = '2019-07-04',
+        now = Date.parse(new Date()),
+        over = Date.parse(deadLine);
 
+    if (over <= now) {
+        let days = document.querySelector('#days'),
+            hours = document.querySelector('#hours'),
+            minutes = document.querySelector('#minutes'),
+            seconds = document.querySelector('#seconds');
+
+        days.textContent = "00";  
+        hours.textContent = "00";
+        minutes.textContent = "00";
+        seconds.textContent = "00";
+    } else {
+        function getTimeRemaining(endtime) {
+            let t = Date.parse(endtime) - Date.parse(new Date()),
+                seconds = Math.floor((t/1000) % 60),
+                minutes = Math.floor((t/1000/60) % 60),
+                hours = Math.floor((t/1000/60/60) % 24),
+                days = Math.floor((t/(1000*60*60*24)));
+
+            return {
+                'total' : t,
+                'days' : days,
+                'hours' : hours,
+                'minutes' : minutes,
+                'seconds' : seconds
+            };
+        }
+
+        function setClock (endTime) {
+            let days = document.querySelector('#days'),
+                hours = document.querySelector('#hours'),
+                minutes = document.querySelector('#minutes'),
+                seconds = document.querySelector('#seconds'),
+                timeInterval = setInterval(updateClock, 1000);
+
+            /*    Динамическая запись данные в верстку    */
+
+            function updateClock() {
+                let t = getTimeRemaining(endTime);
+                days.textContent = appendZero(t.days);
+                hours.textContent = appendZero(t.hours);
+                minutes.textContent = appendZero(t.minutes);
+                seconds.textContent = appendZero(t.seconds);
+
+                if(t.total <= 0) {
+                    clearInterval(timeInterval);
+                }
+            }
+        }
+
+        function appendZero(i) {
+            if (i < 10){	
+                i = "0" + i;
+            }
+            return i;
+        }
+
+        setClock(deadLine);
+  
+    }
 }
 
 module.exports = timer;
